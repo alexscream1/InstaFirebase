@@ -3,10 +3,11 @@
 	archiveVersion = 1;
 	classes = {
 	};
-	objectVersion = 50;
+	objectVersion = 51;
 	objects = {
 
 /* Begin PBXBuildFile section */
+		0A914E45B900A15EE413D82F /* Pods_InstaFirebase.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4C11ABAB1206B4E4F28F5D37 /* Pods_InstaFirebase.framework */; };
 		664BE1D525F77FF100822F55 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 664BE1D425F77FF100822F55 /* AppDelegate.swift */; };
 		664BE1D725F77FF100822F55 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 664BE1D625F77FF100822F55 /* SceneDelegate.swift */; };
 		664BE1D925F77FF100822F55 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 664BE1D825F77FF100822F55 /* ViewController.swift */; };
@@ -15,9 +16,12 @@
 		664BE1E125F77FF200822F55 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 664BE1DF25F77FF200822F55 /* LaunchScreen.storyboard */; };
 		664BE1EA25F7800600822F55 /* .gitignore in Resources */ = {isa = PBXBuildFile; fileRef = 664BE1E925F7800600822F55 /* .gitignore */; };
 		664BE1EE25F7961B00822F55 /* Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 664BE1ED25F7961B00822F55 /* Extensions.swift */; };
+		66C3017225F7A6EC0093309F /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 66C3017125F7A6EC0093309F /* GoogleService-Info.plist */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		4C11ABAB1206B4E4F28F5D37 /* Pods_InstaFirebase.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_InstaFirebase.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		5C50FD7139CB92E3769E75F4 /* Pods-InstaFirebase.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-InstaFirebase.debug.xcconfig"; path = "Target Support Files/Pods-InstaFirebase/Pods-InstaFirebase.debug.xcconfig"; sourceTree = "<group>"; };
 		664BE1D125F77FF100822F55 /* InstaFirebase.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = InstaFirebase.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		664BE1D425F77FF100822F55 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		664BE1D625F77FF100822F55 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -28,6 +32,8 @@
 		664BE1E225F77FF200822F55 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		664BE1E925F7800600822F55 /* .gitignore */ = {isa = PBXFileReference; lastKnownFileType = text; path = .gitignore; sourceTree = "<group>"; };
 		664BE1ED25F7961B00822F55 /* Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Extensions.swift; sourceTree = "<group>"; };
+		66C3017125F7A6EC0093309F /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
+		D215AA216B041C4E3D1761B0 /* Pods-InstaFirebase.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-InstaFirebase.release.xcconfig"; path = "Target Support Files/Pods-InstaFirebase/Pods-InstaFirebase.release.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -35,17 +41,28 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				0A914E45B900A15EE413D82F /* Pods_InstaFirebase.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		5F803364E8FB3FFD03A5BCF9 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				4C11ABAB1206B4E4F28F5D37 /* Pods_InstaFirebase.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
 		664BE1C825F77FF100822F55 = {
 			isa = PBXGroup;
 			children = (
 				664BE1D325F77FF100822F55 /* InstaFirebase */,
 				664BE1D225F77FF100822F55 /* Products */,
+				80DC307C51F9DF00898DB73F /* Pods */,
+				5F803364E8FB3FFD03A5BCF9 /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -69,6 +86,7 @@
 				664BE1DF25F77FF200822F55 /* LaunchScreen.storyboard */,
 				664BE1E225F77FF200822F55 /* Info.plist */,
 				664BE1E925F7800600822F55 /* .gitignore */,
+				66C3017125F7A6EC0093309F /* GoogleService-Info.plist */,
 			);
 			path = InstaFirebase;
 			sourceTree = "<group>";
@@ -81,6 +99,15 @@
 			path = Utilities;
 			sourceTree = "<group>";
 		};
+		80DC307C51F9DF00898DB73F /* Pods */ = {
+			isa = PBXGroup;
+			children = (
+				5C50FD7139CB92E3769E75F4 /* Pods-InstaFirebase.debug.xcconfig */,
+				D215AA216B041C4E3D1761B0 /* Pods-InstaFirebase.release.xcconfig */,
+			);
+			path = Pods;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -88,9 +115,11 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 664BE1E525F77FF200822F55 /* Build configuration list for PBXNativeTarget "InstaFirebase" */;
 			buildPhases = (
+				32ECC06AB5476EE41CC2A272 /* [CP] Check Pods Manifest.lock */,
 				664BE1CD25F77FF100822F55 /* Sources */,
 				664BE1CE25F77FF100822F55 /* Frameworks */,
 				664BE1CF25F77FF100822F55 /* Resources */,
+				521501F3CDA278833624E1ED /* [CP] Embed Pods Frameworks */,
 			);
 			buildRules = (
 			);
@@ -140,12 +169,55 @@
 			files = (
 				664BE1EA25F7800600822F55 /* .gitignore in Resources */,
 				664BE1E125F77FF200822F55 /* LaunchScreen.storyboard in Resources */,
+				66C3017225F7A6EC0093309F /* GoogleService-Info.plist in Resources */,
 				664BE1DE25F77FF200822F55 /* Assets.xcassets in Resources */,
 				664BE1DC25F77FF100822F55 /* Main.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXResourcesBuildPhase section */
+
+/* Begin PBXShellScriptBuildPhase section */
+		32ECC06AB5476EE41CC2A272 /* [CP] Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
+				"${PODS_ROOT}/Manifest.lock",
+			);
+			name = "[CP] Check Pods Manifest.lock";
+			outputFileListPaths = (
+			);
+			outputPaths = (
+				"$(DERIVED_FILE_DIR)/Pods-InstaFirebase-checkManifestLockResult.txt",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
+			showEnvVarsInLog = 0;
+		};
+		521501F3CDA278833624E1ED /* [CP] Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-InstaFirebase/Pods-InstaFirebase-frameworks-${CONFIGURATION}-input-files.xcfilelist",
+			);
+			name = "[CP] Embed Pods Frameworks";
+			outputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-InstaFirebase/Pods-InstaFirebase-frameworks-${CONFIGURATION}-output-files.xcfilelist",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-InstaFirebase/Pods-InstaFirebase-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+/* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
 		664BE1CD25F77FF100822F55 /* Sources */ = {
@@ -299,12 +371,14 @@
 		};
 		664BE1E625F77FF200822F55 /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 5C50FD7139CB92E3769E75F4 /* Pods-InstaFirebase.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = 94AP88933H;
 				INFOPLIST_FILE = InstaFirebase/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 13.5;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -318,12 +392,14 @@
 		};
 		664BE1E725F77FF200822F55 /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = D215AA216B041C4E3D1761B0 /* Pods-InstaFirebase.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = 94AP88933H;
 				INFOPLIST_FILE = InstaFirebase/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 13.5;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",

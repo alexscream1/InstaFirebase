@@ -1,0 +1,6 @@
+framework module Pods_InstaFirebase {
+  umbrella header "Pods-InstaFirebase-umbrella.h"
+
+  export *
+  module * { export * }
+}
