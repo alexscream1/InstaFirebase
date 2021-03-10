@@ -8,7 +8,7 @@
 import UIKit
 import Firebase
 
-class ViewController: UIViewController {
+class SignUpController: UIViewController {
     
     // Create plusPhotoButton
     let plusPhotoButton : UIButton = {
@@ -68,13 +68,19 @@ class ViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        view.addSubview(plusPhotoButton)
+        view.backgroundColor = .white
         
-        // PlusPhotoButton constraints
+        
+        // AlreadyHaveAccountButton
+        view.addSubview(alreadyHaveAccountButton)
+        alreadyHaveAccountButton.anchor(top: nil, left: view.leftAnchor, bottom: view.bottomAnchor, right: view.rightAnchor, paddingTop: 0, paddingLeft: 0, paddingBottom: -10, paddingRight: 0, width: 0, height: 50)
+        
+        // PlusPhotoButton
+        view.addSubview(plusPhotoButton)
         plusPhotoButton.anchor(top: view.topAnchor, left: nil, bottom: nil, right: nil, paddingTop: 80, paddingLeft: 0, paddingBottom: 0, paddingRight: 0, width: 140, height: 140)
         plusPhotoButton.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
         
-        setupInputFields()
+        setupSignUpFields()
         
     }
     
@@ -93,8 +99,23 @@ class ViewController: UIViewController {
         }
     }
     
-    // Sign Up Button
+    let alreadyHaveAccountButton: UIButton = {
+        let button = UIButton(type: .system)
+        
+        let attributedText = NSMutableAttributedString(string: "Already have an account?  ", attributes: [NSAttributedString.Key.font: UIFont.systemFont(ofSize: 16), NSAttributedString.Key.foregroundColor: UIColor.lightGray])
+        attributedText.append(NSAttributedString(string: "Log in.", attributes: [NSAttributedString.Key.font: UIFont.boldSystemFont(ofSize: 16), NSAttributedString.Key.foregroundColor: UIColor.rgb(red: 17, green: 154, blue: 237)]))
+        
+        button.setAttributedTitle(attributedText, for: .normal)
+        button.addTarget(self, action: #selector(alreadyHaveAccountButtonPressed), for: .touchUpInside)
+        return button
+    }()
     
+    @objc func alreadyHaveAccountButtonPressed() {
+        navigationController?.popViewController(animated: true)
+    }
+    
+    
+    // Sign Up Button
     let signUpButton : UIButton = {
         let button = UIButton(type: .system)
         button.setTitle("Sign up", for: .normal)
@@ -154,6 +175,10 @@ class ViewController: UIViewController {
                             return
                         }
                         print("Succesfully save user info to db")
+                        guard let mainTabBarController = UIApplication.shared.windows[0].rootViewController as? MainTabBarController else { return }
+                        mainTabBarController.setupViewControllers()
+                        
+                        self.dismiss(animated: true, completion: nil)
                     }
                 }
                     
@@ -162,7 +187,7 @@ class ViewController: UIViewController {
     }
 
 
-    fileprivate func setupInputFields() {
+    fileprivate func setupSignUpFields() {
         
         let stackView = UIStackView(arrangedSubviews: [emailTextField, usernameTextField, passwordTextField, signUpButton])
         
@@ -178,7 +203,7 @@ class ViewController: UIViewController {
 }
 
 // Extension for UIImagePickerController
-extension ViewController: UIImagePickerControllerDelegate, UINavigationControllerDelegate  {
+extension SignUpController: UIImagePickerControllerDelegate, UINavigationControllerDelegate  {
     
     func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any]) {
         
