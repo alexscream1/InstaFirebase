@@ -12,14 +12,17 @@ class UserProfileHeader: UICollectionViewCell {
     
     var user: User? {
         didSet {
-            setupProfileImage()
+            guard let profileImageURL = user?.profileImageURL else { return }
+            profileImageView.loadImage(imageURL: profileImageURL)
+            
             usernameLabel.text = user?.username
         }
     }
     
     // Profile ImageView
-    let profileImageView : UIImageView = {
-        let iv = UIImageView()
+    let profileImageView : CustomImageView = {
+        let iv = CustomImageView()
+        
         return iv
     }()
     
@@ -27,7 +30,6 @@ class UserProfileHeader: UICollectionViewCell {
     let gridButton : UIButton = {
         let btn = UIButton(type: .system)
         btn.setImage(#imageLiteral(resourceName: "grid"), for: .normal)
-        //btn.tintColor = UIColor(white: 0, alpha: 0.2)
         return btn
     }()
     
@@ -130,7 +132,7 @@ class UserProfileHeader: UICollectionViewCell {
         stackView.axis = .horizontal
         addSubview(stackView)
         
-        stackView.anchor(top: topAnchor, left: profileImageView.rightAnchor, bottom: nil, right: rightAnchor, paddingTop: 12, paddingLeft: 12, paddingBottom: 0, paddingRight: -12, width: 0, height: 50)
+        stackView.anchor(top: topAnchor, left: profileImageView.rightAnchor, bottom: nil, right: rightAnchor, paddingTop: 12, paddingLeft: 12, paddingBottom: 0, paddingRight: 12, width: 0, height: 50)
     }
     
     // MARK: - Setup Toolbar
@@ -158,29 +160,5 @@ class UserProfileHeader: UICollectionViewCell {
     
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
-    }
-    
-    // MARK: - SetupProfileImage Function
-    fileprivate func setupProfileImage() {
-        
-        guard let profileImageURL = user?.profileImageURL else { return }
-        guard let url = URL(string: profileImageURL) else { return }
-        
-        URLSession.shared.dataTask(with: url) { (data, response, error) in
-            
-            // Check for the error, then construct the image using data
-            if let error = error {
-                print("Failed to fetch image", error)
-                return
-            }
-                
-            guard let data = data else { return }
-            let image = UIImage(data: data)
-                
-            // Need to go back on main UI thread
-            DispatchQueue.main.async {
-                self.profileImageView.image = image
-            }
-            }.resume()
     }
 }

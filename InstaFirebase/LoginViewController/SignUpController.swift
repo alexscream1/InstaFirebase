@@ -74,7 +74,7 @@ class SignUpController: UIViewController {
         
         // AlreadyHaveAccountButton
         view.addSubview(alreadyHaveAccountButton)
-        alreadyHaveAccountButton.anchor(top: nil, left: view.leftAnchor, bottom: view.bottomAnchor, right: view.rightAnchor, paddingTop: 0, paddingLeft: 0, paddingBottom: -10, paddingRight: 0, width: 0, height: 50)
+        alreadyHaveAccountButton.anchor(top: nil, left: view.leftAnchor, bottom: view.bottomAnchor, right: view.rightAnchor, paddingTop: 0, paddingLeft: 0, paddingBottom: 10, paddingRight: 0, width: 0, height: 50)
         
         // PlusPhotoButton
         view.addSubview(plusPhotoButton)
@@ -161,6 +161,7 @@ class SignUpController: UIViewController {
                 storageItem.downloadURL { (url, error) in
                     if let error = error {
                         print("Error: ", error)
+                        return
                     }
                     
                     guard let profileImageURL = url?.absoluteString else { return }
@@ -199,7 +200,7 @@ class SignUpController: UIViewController {
         view.addSubview(stackView)
         
         // Stackview constraints
-        stackView.anchor(top: plusPhotoButton.bottomAnchor, left: view.leftAnchor, bottom: nil, right: view.rightAnchor, paddingTop: 30, paddingLeft: 40, paddingBottom: 0, paddingRight: -40, width: 0, height: 200)
+        stackView.anchor(top: plusPhotoButton.bottomAnchor, left: view.leftAnchor, bottom: nil, right: view.rightAnchor, paddingTop: 30, paddingLeft: 40, paddingBottom: 0, paddingRight: 40, width: 0, height: 200)
     }
 }
 
@@ -225,30 +226,4 @@ extension SignUpController: UIImagePickerControllerDelegate, UINavigationControl
     
 }
 
-// Extension for UIView constraints
-extension UIView {
-    
-    func anchor(top: NSLayoutYAxisAnchor?, left: NSLayoutXAxisAnchor?, bottom: NSLayoutYAxisAnchor?, right: NSLayoutXAxisAnchor?, paddingTop: CGFloat, paddingLeft: CGFloat, paddingBottom: CGFloat, paddingRight: CGFloat, width: CGFloat, height: CGFloat) {
-        
-        translatesAutoresizingMaskIntoConstraints = false
 
-        if let top = top {
-            self.topAnchor.constraint(equalTo: top, constant: paddingTop).isActive = true
-        }
-        if let left = left {
-            self.leftAnchor.constraint(equalTo: left, constant: paddingLeft).isActive = true
-        }
-        if let bottom = bottom {
-            self.bottomAnchor.constraint(equalTo: bottom, constant: paddingBottom).isActive = true
-        }
-        if let right = right {
-            self.rightAnchor.constraint(equalTo: right, constant: paddingRight).isActive = true
-        }
-        if width != 0 {
-            self.widthAnchor.constraint(equalToConstant: width).isActive = true
-        }
-        if height != 0 {
-            self.heightAnchor.constraint(equalToConstant: height).isActive = true
-        }
-    }
-}

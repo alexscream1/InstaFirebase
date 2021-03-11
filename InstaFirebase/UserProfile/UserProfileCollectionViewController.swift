@@ -10,22 +10,27 @@ import Firebase
 
 private let reuseIdentifier = "Cell"
 
-class UserProfileCollectionViewController: UICollectionViewController, UICollectionViewDelegateFlowLayout {
+class UserProfileCollectionViewController: UICollectionViewController {
 
-    
+    let headerID = "headerID"
+    let cellID = "cellID"
     var user: User?
+    var posts = [Posts]()
     
     override func viewDidLoad() {
         super.viewDidLoad()
 
        
-        self.collectionView!.register(UICollectionViewCell.self, forCellWithReuseIdentifier: reuseIdentifier)
+        self.collectionView!.register(UserProfileCell.self, forCellWithReuseIdentifier: cellID)
+        collectionView.register(UserProfileHeader.self, forSupplementaryViewOfKind: UICollectionView.elementKindSectionHeader, withReuseIdentifier: headerID)
         
         collectionView.backgroundColor = .white
         
         fetchUser()
+       
+        fetchOrderedPosts()
         
-        collectionView.register(UserProfileHeader.self, forSupplementaryViewOfKind: UICollectionView.elementKindSectionHeader, withReuseIdentifier: "headerID")
+        
         
         navigationItem.rightBarButtonItem = UIBarButtonItem(image: UIImage(named: "gear")?.withRenderingMode(.alwaysOriginal), style: .plain, target: self, action: #selector(handleLogout))
     }
@@ -61,46 +66,85 @@ class UserProfileCollectionViewController: UICollectionViewController, UICollect
         guard let uid = Auth.auth().currentUser?.uid else { return }
         
         Database.database().reference().child("users").child(uid).observeSingleEvent(of: .value) { (snapshot) in
-            print(snapshot.value ?? "")
             guard let dict = snapshot.value as? [String: Any] else { return }
             
             self.user = User(dict: dict)
             self.navigationItem.title = self.user?.username
             self.collectionView?.reloadData()
+            
+        } withCancel: { (error) in
+            print("Failed to fetch user", error)
         }
     }
     
+    fileprivate func fetchOrderedPosts() {
+        guard let uid = Auth.auth().currentUser?.uid else { return }
+        let ref = Database.database().reference().child("posts").child(uid)
+        ref.queryOrdered(byChild: "creationDate").observe(.childAdded) { (snapshot) in
+            guard let dictionary = snapshot.value as? [String: Any] else { return }
+            
+            let post = Posts(dictionary: dictionary)
+            self.posts.append(post)
+            self.collectionView.reloadData()
+            
+        } withCancel: { (error) in
+            print("failed to fetch posts:", error)
+        }
+
+    }
     
-    
-    
+    // Get data for User Profile Posts
+//    fileprivate func fetchPosts() {
+//        guard let uid = Auth.auth().currentUser?.uid else { return }
+//
+//        let ref = Database.database().reference().child("posts").child(uid)
+//        ref.observeSingleEvent(of: .value) { (snapshot) in
+//            guard let dictionaries = snapshot.value as? [String: Any] else { return }
+//
+//            dictionaries.forEach { (key, value) in
+//                guard let dictionary = value as? [String: Any] else { return }
+//
+//                let post = Posts(dictionary: dictionary)
+//                self.posts.append(post)
+//            }
+//            self.collectionView.reloadData()
+//
+//        } withCancel: { (error) in
+//            print("Failed to fetch posts", error)
+//        }
+//
+//    }
     
     // MARK: UICollectionViewDataSource
 
     override func numberOfSections(in collectionView: UICollectionView) -> Int {
-        // #warning Incomplete implementation, return the number of sections
         return 1
     }
 
 
     override func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        // #warning Incomplete implementation, return the number of items
-        return 7
+        return posts.count
     }
 
     override func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: reuseIdentifier, for: indexPath)
-        cell.backgroundColor = .purple
+        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: cellID, for: indexPath) as! UserProfileCell
+        cell.post = posts[indexPath.item]
         return cell
     }
     
     // Create user profile header
     override func collectionView(_ collectionView: UICollectionView, viewForSupplementaryElementOfKind kind: String, at indexPath: IndexPath) -> UICollectionReusableView {
-        let header = collectionView.dequeueReusableSupplementaryView(ofKind: kind, withReuseIdentifier: "headerID", for: indexPath) as! UserProfileHeader
+        let header = collectionView.dequeueReusableSupplementaryView(ofKind: kind, withReuseIdentifier: headerID, for: indexPath) as! UserProfileHeader
         header.user = self.user
         return header
     }
     
-    // MARK: - UICollectionViewDelegateFlowLayout
+    
+}
+
+// MARK: - UICollectionViewDelegateFlowLayout
+
+extension UserProfileCollectionViewController: UICollectionViewDelegateFlowLayout {
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
         let width = (view.frame.width - 2) / 3
@@ -119,8 +163,8 @@ class UserProfileCollectionViewController: UICollectionViewController, UICollect
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, referenceSizeForHeaderInSection section: Int) -> CGSize {
         return CGSize(width: view.frame.width, height: 200)
     }
+    
 }
-
 
 struct User {
     var username: String
