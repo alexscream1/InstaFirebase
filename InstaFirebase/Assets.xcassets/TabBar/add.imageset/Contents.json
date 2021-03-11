@@ -1,19 +1,16 @@
 {
   "images" : [
     {
+      "filename" : "add-2.png",
       "idiom" : "universal",
-      "locale" : "letsbuildthatapp.com",
       "scale" : "1x"
     },
     {
-      "filename" : "plus_photo@2x.png",
       "idiom" : "universal",
-      "locale" : "letsbuildthatapp.com",
       "scale" : "2x"
     },
     {
       "idiom" : "universal",
-      "locale" : "letsbuildthatapp.com",
       "scale" : "3x"
     }
   ],
