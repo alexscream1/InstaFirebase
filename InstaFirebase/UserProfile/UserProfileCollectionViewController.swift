@@ -64,16 +64,11 @@ class UserProfileCollectionViewController: UICollectionViewController {
     fileprivate func fetchUser() {
         
         guard let uid = Auth.auth().currentUser?.uid else { return }
-        
-        Database.database().reference().child("users").child(uid).observeSingleEvent(of: .value) { (snapshot) in
-            guard let dict = snapshot.value as? [String: Any] else { return }
-            
-            self.user = User(dict: dict)
+    
+        Database.fetchUserWithUID(uid: uid) { (user) in
+            self.user = user
             self.navigationItem.title = self.user?.username
             self.collectionView?.reloadData()
-            
-        } withCancel: { (error) in
-            print("Failed to fetch user", error)
         }
     }
     
@@ -83,8 +78,9 @@ class UserProfileCollectionViewController: UICollectionViewController {
         ref.queryOrdered(byChild: "creationDate").observe(.childAdded) { (snapshot) in
             guard let dictionary = snapshot.value as? [String: Any] else { return }
             
-            let post = Posts(dictionary: dictionary)
-            self.posts.append(post)
+            guard let user = self.user else { return }
+            let post = Posts(user: user, dictionary: dictionary)
+            self.posts.insert(post, at: 0)
             self.collectionView.reloadData()
             
         } withCancel: { (error) in
@@ -93,27 +89,6 @@ class UserProfileCollectionViewController: UICollectionViewController {
 
     }
     
-    // Get data for User Profile Posts
-//    fileprivate func fetchPosts() {
-//        guard let uid = Auth.auth().currentUser?.uid else { return }
-//
-//        let ref = Database.database().reference().child("posts").child(uid)
-//        ref.observeSingleEvent(of: .value) { (snapshot) in
-//            guard let dictionaries = snapshot.value as? [String: Any] else { return }
-//
-//            dictionaries.forEach { (key, value) in
-//                guard let dictionary = value as? [String: Any] else { return }
-//
-//                let post = Posts(dictionary: dictionary)
-//                self.posts.append(post)
-//            }
-//            self.collectionView.reloadData()
-//
-//        } withCancel: { (error) in
-//            print("Failed to fetch posts", error)
-//        }
-//
-//    }
     
     // MARK: UICollectionViewDataSource
 
@@ -166,16 +141,6 @@ extension UserProfileCollectionViewController: UICollectionViewDelegateFlowLayou
     
 }
 
-struct User {
-    var username: String
-    var profileImageURL: String
-    
-    init(dict: [String: Any]) {
-        self.username = dict["username"] as? String ?? ""
-        self.profileImageURL = dict["profileImageURL"] as? String ?? ""
-    }
-    
-    
-}
+
 
 

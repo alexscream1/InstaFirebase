@@ -13,7 +13,7 @@ class SignUpController: UIViewController {
     // Create plusPhotoButton
     let plusPhotoButton : UIButton = {
         let button = UIButton(type: .system)
-        let imageButton = UIImage(named: "addicon")?.withRenderingMode(.alwaysOriginal)
+        let imageButton = UIImage(named: "plus_photo")?.withRenderingMode(.alwaysOriginal)
         button.contentMode = .scaleAspectFill
         button.setImage(imageButton, for: .normal)
         button.addTarget(self, action: #selector(choosePhoto), for: .touchUpInside)
