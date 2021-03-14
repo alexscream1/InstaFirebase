@@ -8,7 +8,6 @@
 import UIKit
 import Firebase
 
-private let reuseIdentifier = "Cell"
 
 class UserProfileCollectionViewController: UICollectionViewController {
 
@@ -16,6 +15,7 @@ class UserProfileCollectionViewController: UICollectionViewController {
     let cellID = "cellID"
     var user: User?
     var posts = [Posts]()
+    var userID: String?
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -28,7 +28,7 @@ class UserProfileCollectionViewController: UICollectionViewController {
         
         fetchUser()
        
-        fetchOrderedPosts()
+        //fetchOrderedPosts()
         
         
         
@@ -63,17 +63,20 @@ class UserProfileCollectionViewController: UICollectionViewController {
     // Get username for User Profile Title
     fileprivate func fetchUser() {
         
-        guard let uid = Auth.auth().currentUser?.uid else { return }
-    
+        guard let uid = userID ?? Auth.auth().currentUser?.uid else { return }
+        
         Database.fetchUserWithUID(uid: uid) { (user) in
             self.user = user
             self.navigationItem.title = self.user?.username
             self.collectionView?.reloadData()
+            self.fetchOrderedPosts()
         }
     }
     
     fileprivate func fetchOrderedPosts() {
-        guard let uid = Auth.auth().currentUser?.uid else { return }
+        
+        guard let uid = self.user?.uid else { return }
+        
         let ref = Database.database().reference().child("posts").child(uid)
         ref.queryOrdered(byChild: "creationDate").observe(.childAdded) { (snapshot) in
             guard let dictionary = snapshot.value as? [String: Any] else { return }

@@ -20,14 +20,6 @@ class SignUpController: UIViewController {
         return button
     }()
     
-    // Choose photo function
-    @objc func choosePhoto() {
-        let imagePickerController = UIImagePickerController()
-        imagePickerController.delegate = self
-        imagePickerController.allowsEditing = true
-        present(imagePickerController, animated: true, completion: nil)
-    }
-    
     // Email Textfield
     
     let emailTextField : UITextField = {
@@ -85,6 +77,13 @@ class SignUpController: UIViewController {
         
     }
     
+    // Choose photo function
+    @objc func choosePhoto() {
+        let imagePickerController = UIImagePickerController()
+        imagePickerController.delegate = self
+        imagePickerController.allowsEditing = true
+        present(imagePickerController, animated: true, completion: nil)
+    }
     
     // Check if all text fields are filled up
     @objc func handleTextInputChange() {

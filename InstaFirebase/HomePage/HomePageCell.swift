@@ -23,6 +23,7 @@ class HomePageCell: UICollectionViewCell {
         }
     }
     
+         
     // Post image view
     let postImageView : CustomImageView = {
         let iv = CustomImageView()
@@ -41,6 +42,7 @@ class HomePageCell: UICollectionViewCell {
     
     let usernameLabel : UILabel = {
         let label = UILabel()
+        label.text = "Username"
         label.font = UIFont.boldSystemFont(ofSize: 14)
         return label
     }()
@@ -55,25 +57,25 @@ class HomePageCell: UICollectionViewCell {
     // Bottom side of post image
     
     let likeButton : UIButton = {
-        let btn = UIButton()
+        let btn = UIButton(type: .system)
         btn.setImage(UIImage(named: "like_unselected")?.withRenderingMode(.alwaysOriginal), for: .normal)
         return btn
     }()
     
     let commentButton : UIButton = {
-        let btn = UIButton()
+        let btn = UIButton(type: .system)
         btn.setImage(UIImage(named: "comment")?.withRenderingMode(.alwaysOriginal), for: .normal)
         return btn
     }()
     
     let sendButton : UIButton = {
-        let btn = UIButton()
+        let btn = UIButton(type: .system)
         btn.setImage(UIImage(named: "send")?.withRenderingMode(.alwaysOriginal), for: .normal)
         return btn
     }()
     
     let bookmarkButton : UIButton = {
-        let btn = UIButton()
+        let btn = UIButton(type: .system)
         btn.setImage(UIImage(named: "mark")?.withRenderingMode(.alwaysOriginal), for: .normal)
         return btn
     }()
@@ -119,11 +121,12 @@ class HomePageCell: UICollectionViewCell {
     
     fileprivate func setupAttributedText() {
         guard let post = self.post else { return }
+        let date = post.creationDate.timeAgoDisplay()
         
         let attributedText = NSMutableAttributedString(string: "\(post.user.username) ", attributes: [NSAttributedString.Key.font: UIFont.boldSystemFont(ofSize: 14)])
         attributedText.append(NSAttributedString(string: post.postText, attributes: [NSAttributedString.Key.font: UIFont.systemFont(ofSize: 14)]))
         attributedText.append(NSAttributedString(string: "\n\n", attributes: [NSAttributedString.Key.font: UIFont.systemFont(ofSize: 4)]))
-        attributedText.append(NSAttributedString(string: "1 week ago", attributes: [NSAttributedString.Key.font: UIFont.systemFont(ofSize: 14), NSAttributedString.Key.foregroundColor: UIColor.gray]))
+        attributedText.append(NSAttributedString(string: date, attributes: [NSAttributedString.Key.font: UIFont.systemFont(ofSize: 14), NSAttributedString.Key.foregroundColor: UIColor.gray]))
         postTextLabel.attributedText = attributedText
     }
     
@@ -134,7 +137,7 @@ class HomePageCell: UICollectionViewCell {
         
         addSubview(stackView)
         stackView.anchor(top: postImageView.bottomAnchor, left: leftAnchor, bottom: nil, right: nil, paddingTop: 0, paddingLeft: 4, paddingBottom: 0, paddingRight: 0, width: 120, height: 50)
-        
+
         addSubview(bookmarkButton)
         bookmarkButton.anchor(top: postImageView.bottomAnchor, left: nil, bottom: nil, right: rightAnchor, paddingTop: 0, paddingLeft: 0, paddingBottom: 0, paddingRight: 0, width: 40, height: 50)
         

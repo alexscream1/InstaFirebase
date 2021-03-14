@@ -29,14 +29,14 @@ class MainTabBarController: UITabBarController {
     
     func setupViewControllers() {
         
-        let layout = UICollectionViewFlowLayout()
         tabBar.tintColor = .black
         
         // Home page
-        let homeNavController = templateNavController(imageSelected: #imageLiteral(resourceName: "home_selected"), imageUnselected: #imageLiteral(resourceName: "home_unselected"), rootViewController: HomePageController(collectionViewLayout: layout))
+        let homeNavController = templateNavController(imageSelected: #imageLiteral(resourceName: "home_selected"), imageUnselected: #imageLiteral(resourceName: "home_unselected"), rootViewController: HomePageController(collectionViewLayout: UICollectionViewFlowLayout()))
         
         // Search page
-        let searchNavController = templateNavController(imageSelected: #imageLiteral(resourceName: "search_selected"), imageUnselected: #imageLiteral(resourceName: "search_unselected"))
+        
+        let searchNavController = templateNavController(imageSelected: #imageLiteral(resourceName: "search_selected"), imageUnselected: #imageLiteral(resourceName: "search_unselected"), rootViewController: UserSearchController(collectionViewLayout: UICollectionViewFlowLayout()))
         
         // Add page
         let addNavController = templateNavController(imageSelected: #imageLiteral(resourceName: "plus_unselected"), imageUnselected: #imageLiteral(resourceName: "plus_unselected"))
@@ -48,7 +48,7 @@ class MainTabBarController: UITabBarController {
         
         // User profile page
         
-        let userProfileController = UserProfileCollectionViewController(collectionViewLayout: layout)
+        let userProfileController = UserProfileCollectionViewController(collectionViewLayout: UICollectionViewFlowLayout())
         let userNavController = UINavigationController(rootViewController: userProfileController)
         userNavController.tabBarItem.image = #imageLiteral(resourceName: "profile_unselected")
         userNavController.tabBarItem.selectedImage = #imageLiteral(resourceName: "profile_selected")

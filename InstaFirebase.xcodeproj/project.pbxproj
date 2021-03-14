@@ -29,6 +29,8 @@
 		664CC38C25FBBFE4002B3A6E /* FirebaseExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 664CC38B25FBBFE4002B3A6E /* FirebaseExtension.swift */; };
 		6653DC2A25F8AE180032529F /* UserProfileHeader.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6653DC2925F8AE180032529F /* UserProfileHeader.swift */; };
 		6653DC3025F904FF0032529F /* LoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6653DC2F25F904FF0032529F /* LoginViewController.swift */; };
+		665FE9BA25FCACBF0089200B /* UserSearchCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 665FE9B925FCACBF0089200B /* UserSearchCell.swift */; };
+		665FE9BD25FCACD40089200B /* UserSearchController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 665FE9BC25FCACD40089200B /* UserSearchController.swift */; };
 		666900CD25F7E5E200875462 /* MainTabBarController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 666900CC25F7E5E200875462 /* MainTabBarController.swift */; };
 		666900D425F7E7C700875462 /* UserProfileCollectionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 666900D325F7E7C700875462 /* UserProfileCollectionViewController.swift */; };
 		66C3017225F7A6EC0093309F /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 66C3017125F7A6EC0093309F /* GoogleService-Info.plist */; };
@@ -60,6 +62,8 @@
 		664CC38B25FBBFE4002B3A6E /* FirebaseExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FirebaseExtension.swift; sourceTree = "<group>"; };
 		6653DC2925F8AE180032529F /* UserProfileHeader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserProfileHeader.swift; sourceTree = "<group>"; };
 		6653DC2F25F904FF0032529F /* LoginViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginViewController.swift; sourceTree = "<group>"; };
+		665FE9B925FCACBF0089200B /* UserSearchCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserSearchCell.swift; sourceTree = "<group>"; };
+		665FE9BC25FCACD40089200B /* UserSearchController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserSearchController.swift; sourceTree = "<group>"; };
 		666900CC25F7E5E200875462 /* MainTabBarController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainTabBarController.swift; sourceTree = "<group>"; };
 		666900D325F7E7C700875462 /* UserProfileCollectionViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserProfileCollectionViewController.swift; sourceTree = "<group>"; };
 		66C3017125F7A6EC0093309F /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
@@ -104,7 +108,7 @@
 			path = HomePage;
 			sourceTree = "<group>";
 		};
-		664A13B025FA098800ED694F /* AddPhoto */ = {
+		664A13B025FA098800ED694F /* AddPhotoPage */ = {
 			isa = PBXGroup;
 			children = (
 				664A13AD25FA098400ED694F /* PhotoSelectionController.swift */,
@@ -112,7 +116,7 @@
 				66012EB425FA386C003056C7 /* PhotoSelectionHeader.swift */,
 				664A13B325FA21F200ED694F /* PhotoSelectionCell.swift */,
 			);
-			path = AddPhoto;
+			path = AddPhotoPage;
 			sourceTree = "<group>";
 		};
 		664BE1C825F77FF100822F55 = {
@@ -136,20 +140,20 @@
 		664BE1D325F77FF100822F55 /* InstaFirebase */ = {
 			isa = PBXGroup;
 			children = (
+				6653DC3825F96A100032529F /* AppSceneDelegates */,
+				6653DC3225F905030032529F /* LoginPages */,
+				6637889225FB57BD0009984F /* HomePage */,
+				665FE9B825FCAC7E0089200B /* SearchPage */,
+				664A13B025FA098800ED694F /* AddPhotoPage */,
+				6653DC2725F8AB1E0032529F /* UserProfilePage */,
 				66012EBF25FA90B2003056C7 /* Models */,
 				664BE1F025F7961F00822F55 /* Utilities */,
-				6653DC3825F96A100032529F /* Delegate */,
-				664A13B025FA098800ED694F /* AddPhoto */,
-				6653DC3225F905030032529F /* LoginViewController */,
-				6653DC2725F8AB1E0032529F /* UserProfile */,
 				666900CC25F7E5E200875462 /* MainTabBarController.swift */,
-				6637889225FB57BD0009984F /* HomePage */,
-				664BE1DA25F77FF100822F55 /* Main.storyboard */,
 				664BE1DD25F77FF200822F55 /* Assets.xcassets */,
-				664BE1DF25F77FF200822F55 /* LaunchScreen.storyboard */,
 				664BE1E225F77FF200822F55 /* Info.plist */,
 				664BE1E925F7800600822F55 /* .gitignore */,
 				66C3017125F7A6EC0093309F /* GoogleService-Info.plist */,
+				666E842225FBC609001C8FC4 /* Storyboards */,
 			);
 			path = InstaFirebase;
 			sourceTree = "<group>";
@@ -164,32 +168,50 @@
 			path = Utilities;
 			sourceTree = "<group>";
 		};
-		6653DC2725F8AB1E0032529F /* UserProfile */ = {
+		6653DC2725F8AB1E0032529F /* UserProfilePage */ = {
 			isa = PBXGroup;
 			children = (
 				6653DC2925F8AE180032529F /* UserProfileHeader.swift */,
 				666900D325F7E7C700875462 /* UserProfileCollectionViewController.swift */,
 				66012EC325FA9289003056C7 /* UserProfileCell.swift */,
 			);
-			path = UserProfile;
+			path = UserProfilePage;
 			sourceTree = "<group>";
 		};
-		6653DC3225F905030032529F /* LoginViewController */ = {
+		6653DC3225F905030032529F /* LoginPages */ = {
 			isa = PBXGroup;
 			children = (
 				664BE1D825F77FF100822F55 /* SignUpController.swift */,
 				6653DC2F25F904FF0032529F /* LoginViewController.swift */,
 			);
-			path = LoginViewController;
+			path = LoginPages;
 			sourceTree = "<group>";
 		};
-		6653DC3825F96A100032529F /* Delegate */ = {
+		6653DC3825F96A100032529F /* AppSceneDelegates */ = {
 			isa = PBXGroup;
 			children = (
 				664BE1D425F77FF100822F55 /* AppDelegate.swift */,
 				664BE1D625F77FF100822F55 /* SceneDelegate.swift */,
 			);
-			path = Delegate;
+			path = AppSceneDelegates;
+			sourceTree = "<group>";
+		};
+		665FE9B825FCAC7E0089200B /* SearchPage */ = {
+			isa = PBXGroup;
+			children = (
+				665FE9B925FCACBF0089200B /* UserSearchCell.swift */,
+				665FE9BC25FCACD40089200B /* UserSearchController.swift */,
+			);
+			path = SearchPage;
+			sourceTree = "<group>";
+		};
+		666E842225FBC609001C8FC4 /* Storyboards */ = {
+			isa = PBXGroup;
+			children = (
+				664BE1DA25F77FF100822F55 /* Main.storyboard */,
+				664BE1DF25F77FF200822F55 /* LaunchScreen.storyboard */,
+			);
+			path = Storyboards;
 			sourceTree = "<group>";
 		};
 		80DC307C51F9DF00898DB73F /* Pods */ = {
@@ -317,12 +339,14 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				665FE9BA25FCACBF0089200B /* UserSearchCell.swift in Sources */,
 				664BE1D925F77FF100822F55 /* SignUpController.swift in Sources */,
 				664A13AE25FA098400ED694F /* PhotoSelectionController.swift in Sources */,
 				66012EC425FA9289003056C7 /* UserProfileCell.swift in Sources */,
 				664BE1D525F77FF100822F55 /* AppDelegate.swift in Sources */,
 				66012EC725FA9C91003056C7 /* CustomImageView.swift in Sources */,
 				6637889725FB57FB0009984F /* HomePageCell.swift in Sources */,
+				665FE9BD25FCACD40089200B /* UserSearchController.swift in Sources */,
 				664A13B425FA21F200ED694F /* PhotoSelectionCell.swift in Sources */,
 				666900CD25F7E5E200875462 /* MainTabBarController.swift in Sources */,
 				66012EC125FA90C3003056C7 /* Posts.swift in Sources */,

@@ -12,22 +12,39 @@ private let cellID = "cellID"
 
 class HomePageController: UICollectionViewController {
     
-    var posts = [Posts]()
+    
 
     override func viewDidLoad() {
         super.viewDidLoad()
         
         collectionView.backgroundColor = .white
         
-        self.collectionView!.register(HomePageCell.self, forCellWithReuseIdentifier: cellID)
+        self.collectionView?.register(HomePageCell.self, forCellWithReuseIdentifier: cellID)
         
+        // Refresh control for updating home page
+        let refreshControl = UIRefreshControl()
+        refreshControl.addTarget(self, action: #selector(handleRefresh), for: .valueChanged)
+        collectionView?.refreshControl = refreshControl
+        
+        // Notification observer to observe when new photo added and update home page
+        NotificationCenter.default.addObserver(self, selector: #selector(handleRefresh), name: SharePhotoViewController.updateFeedNotificationName, object: nil)
         
         setupNavigationItems()
-        
-        fetchPost()
+        fetchAllPosts()
     }
     
     
+    @objc func handleRefresh() {
+        posts.removeAll()
+        fetchAllPosts()
+    }
+    
+    fileprivate func fetchAllPosts() {
+        fetchPost()
+        fetchFollowingUsersID()
+    }
+    
+    var posts = [Posts]()
     fileprivate func fetchPost() {
         guard let uid = Auth.auth().currentUser?.uid else { return }
         
@@ -35,10 +52,13 @@ class HomePageController: UICollectionViewController {
             self.fetchPostWithUser(user: user)
         }
     }
-
+    
     fileprivate func fetchPostWithUser(user: User) {
         let ref = Database.database().reference().child("posts").child(user.uid)
         ref.observeSingleEvent(of: .value) { (snapshot) in
+            
+            self.collectionView?.refreshControl?.endRefreshing()
+            
             guard let dictionaries = snapshot.value as? [String: Any] else { return }
 
             dictionaries.forEach { (key, value) in
@@ -48,11 +68,35 @@ class HomePageController: UICollectionViewController {
                 
                 self.posts.append(post)
             }
-            self.collectionView.reloadData()
+            
+            // Sort posts in home page by creation date
+            self.posts.sort { (p1, p2) -> Bool in
+                return p1.creationDate.compare(p2.creationDate) == .orderedDescending
+            }
+            
+            self.collectionView?.reloadData()
 
         } withCancel: { (error) in
             print("Failed to fetch posts", error)
         }
+    }
+    
+    fileprivate func fetchFollowingUsersID() {
+        guard let uid = Auth.auth().currentUser?.uid else { return }
+        Database.database().reference().child("following").child(uid).observeSingleEvent(of: .value) { (snapshot) in
+            
+            guard let usersDict = snapshot.value as? [String: Any] else { return }
+            
+            usersDict.forEach { (key, value) in
+                Database.fetchUserWithUID(uid: key) { (user) in
+                    self.fetchPostWithUser(user: user)
+                }
+            }
+            
+        } withCancel: { (error) in
+            print("Failed")
+        }
+
     }
     
     fileprivate func setupNavigationItems() {
@@ -61,11 +105,6 @@ class HomePageController: UICollectionViewController {
 
     // MARK: UICollectionViewDataSource
 
-    override func numberOfSections(in collectionView: UICollectionView) -> Int {
-        return 1
-    }
-
-
     override func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         
         return posts.count
@@ -73,8 +112,11 @@ class HomePageController: UICollectionViewController {
 
     override func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: cellID, for: indexPath) as! HomePageCell
-    
-        cell.post = posts[indexPath.item]
+        
+        if posts.count > 0 {
+            cell.post = posts[indexPath.item]
+        }
+        
     
         return cell
     }
