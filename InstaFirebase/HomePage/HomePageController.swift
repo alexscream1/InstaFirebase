@@ -101,6 +101,14 @@ class HomePageController: UICollectionViewController {
     
     fileprivate func setupNavigationItems() {
         navigationItem.titleView = UIImageView(image: #imageLiteral(resourceName: "logo2"))
+        
+        navigationItem.leftBarButtonItem = UIBarButtonItem(image: UIImage(named: "camera3"), style: .plain, target: self, action: #selector(handleCamera))
+    }
+    
+    @objc func handleCamera() {
+        let cameraController = CameraViewController()
+        cameraController.modalPresentationStyle = .fullScreen
+        present(cameraController, animated: true, completion: nil)
     }
 
     // MARK: UICollectionViewDataSource
