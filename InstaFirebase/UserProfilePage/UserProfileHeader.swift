@@ -8,7 +8,14 @@
 import UIKit
 import Firebase
 
+protocol UserProfileHeaderDelegate {
+    func didChangeToGridView()
+    func didChangeToListView()
+}
+
 class UserProfileHeader: UICollectionViewCell {
+    
+    var delegate: UserProfileHeaderDelegate?
     
     var user: User? {
         didSet {
@@ -29,17 +36,19 @@ class UserProfileHeader: UICollectionViewCell {
     }()
     
     // Grid Button in Toolbar
-    let gridButton : UIButton = {
+    lazy var gridButton : UIButton = {
         let btn = UIButton(type: .system)
         btn.setImage(#imageLiteral(resourceName: "grid"), for: .normal)
+        btn.addTarget(self, action: #selector(changeToGridView), for: .touchUpInside)
         return btn
     }()
     
     // List Button in Toolbar
-    let listButton : UIButton = {
+    lazy var listButton : UIButton = {
         let btn = UIButton(type: .system)
         btn.setImage(#imageLiteral(resourceName: "list"), for: .normal)
         btn.tintColor = UIColor(white: 0, alpha: 0.2)
+        btn.addTarget(self, action: #selector(changeToListView), for: .touchUpInside)
         return btn
     }()
     
@@ -127,6 +136,20 @@ class UserProfileHeader: UICollectionViewCell {
         
         addSubview(editProfileFollowButton)
         editProfileFollowButton.anchor(top: postsLabel.bottomAnchor, left: postsLabel.leftAnchor, bottom: nil, right: followingLabel.rightAnchor, paddingTop: 4, paddingLeft: 2, paddingBottom: 0, paddingRight: 0, width: 0, height: 34)
+    }
+    
+    // Change collection view style to GRID view
+    @objc func changeToGridView() {
+        gridButton.tintColor = .customBlue()
+        listButton.tintColor = UIColor(white: 0, alpha: 0.2)
+        self.delegate?.didChangeToGridView()
+    }
+    
+    // Change collection view style to LIST view
+    @objc func changeToListView() {
+        listButton.tintColor = .customBlue()
+        gridButton.tintColor = UIColor(white: 0, alpha: 0.2)
+        self.delegate?.didChangeToListView()
     }
     
     // Action for editing profile/following/unfollowing user

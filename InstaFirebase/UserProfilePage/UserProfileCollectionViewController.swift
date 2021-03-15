@@ -13,9 +13,12 @@ class UserProfileCollectionViewController: UICollectionViewController {
 
     let headerID = "headerID"
     let cellID = "cellID"
+    let homePageCellID = "homePageCellID"
     var user: User?
     var posts = [Posts]()
     var userID: String?
+    
+    var isGridView = true
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -23,6 +26,7 @@ class UserProfileCollectionViewController: UICollectionViewController {
        
         self.collectionView!.register(UserProfileCell.self, forCellWithReuseIdentifier: cellID)
         collectionView.register(UserProfileHeader.self, forSupplementaryViewOfKind: UICollectionView.elementKindSectionHeader, withReuseIdentifier: headerID)
+        collectionView.register(HomePageCell.self, forCellWithReuseIdentifier: homePageCellID)
         
         collectionView.backgroundColor = .white
         
@@ -105,15 +109,24 @@ class UserProfileCollectionViewController: UICollectionViewController {
     }
 
     override func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: cellID, for: indexPath) as! UserProfileCell
-        cell.post = posts[indexPath.item]
-        return cell
+        
+        if isGridView {
+            let cell = collectionView.dequeueReusableCell(withReuseIdentifier: cellID, for: indexPath) as! UserProfileCell
+            cell.post = posts[indexPath.item]
+            return cell
+        } else {
+            let cell = collectionView.dequeueReusableCell(withReuseIdentifier: homePageCellID, for: indexPath) as! HomePageCell
+            cell.post = posts[indexPath.item]
+            return cell
+        }
+        
     }
     
     // Create user profile header
     override func collectionView(_ collectionView: UICollectionView, viewForSupplementaryElementOfKind kind: String, at indexPath: IndexPath) -> UICollectionReusableView {
         let header = collectionView.dequeueReusableSupplementaryView(ofKind: kind, withReuseIdentifier: headerID, for: indexPath) as! UserProfileHeader
         header.user = self.user
+        header.delegate = self
         return header
     }
     
@@ -125,8 +138,17 @@ class UserProfileCollectionViewController: UICollectionViewController {
 extension UserProfileCollectionViewController: UICollectionViewDelegateFlowLayout {
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
-        let width = (view.frame.width - 2) / 3
-        return CGSize(width: width, height: width)
+        
+        if isGridView {
+            let width = (view.frame.width - 2) / 3
+            return CGSize(width: width, height: width)
+        } else {
+            var height :  CGFloat = 40 + 8 + 8
+            height += view.frame.width
+            height += 50
+            height += 60
+            return CGSize(width: view.frame.width, height: height)
+        }
     }
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumInteritemSpacingForSectionAt section: Int) -> CGFloat {
@@ -144,6 +166,18 @@ extension UserProfileCollectionViewController: UICollectionViewDelegateFlowLayou
     
 }
 
+// MARK: - UserProfileHeaderDelegate
 
+extension UserProfileCollectionViewController: UserProfileHeaderDelegate {
+    func didChangeToGridView() {
+        isGridView = true
+        self.collectionView.reloadData()
+    }
+    
+    func didChangeToListView() {
+        isGridView = false
+        self.collectionView.reloadData()
+    }
+}
 
 

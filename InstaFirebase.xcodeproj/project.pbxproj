@@ -185,8 +185,8 @@
 		6653DC2725F8AB1E0032529F /* UserProfilePage */ = {
 			isa = PBXGroup;
 			children = (
-				6653DC2925F8AE180032529F /* UserProfileHeader.swift */,
 				666900D325F7E7C700875462 /* UserProfileCollectionViewController.swift */,
+				6653DC2925F8AE180032529F /* UserProfileHeader.swift */,
 				66012EC325FA9289003056C7 /* UserProfileCell.swift */,
 			);
 			path = UserProfilePage;
