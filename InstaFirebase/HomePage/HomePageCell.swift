@@ -7,12 +7,24 @@
 
 import UIKit
 
+protocol HomePageCellDelegate {
+    func didTapComment(post: Posts)
+    
+    func didTapLike(for cell: HomePageCell)
+}
+
 class HomePageCell: UICollectionViewCell {
+
+    var delegate: HomePageCellDelegate?
     
     var post : Posts? {
         didSet {
+            // Setup post image
             guard let postImageURL = post?.imageURL else { return }
             postImageView.loadImage(imageURL: postImageURL)
+            
+            // Setup like
+            likeButton.setImage(post?.hasLike == true ? UIImage(named: "like_selected") : UIImage(named: "like_unselected"), for: .normal)
             
             usernameLabel.text = post?.user.username
             
@@ -32,7 +44,7 @@ class HomePageCell: UICollectionViewCell {
         return iv
     }()
     
-    // Top side of post image
+    
     let profileImageView : CustomImageView = {
         let iv = CustomImageView()
         iv.contentMode = .scaleAspectFill
@@ -54,19 +66,30 @@ class HomePageCell: UICollectionViewCell {
         return btn
     }()
     
-    // Bottom side of post image
     
-    let likeButton : UIButton = {
+    
+    lazy var likeButton : UIButton = {
         let btn = UIButton(type: .system)
         btn.setImage(UIImage(named: "like_unselected")?.withRenderingMode(.alwaysOriginal), for: .normal)
+        btn.addTarget(self, action: #selector(handleLike), for: .touchUpInside)
         return btn
     }()
     
-    let commentButton : UIButton = {
+    lazy var commentButton : UIButton = {
         let btn = UIButton(type: .system)
         btn.setImage(UIImage(named: "comment")?.withRenderingMode(.alwaysOriginal), for: .normal)
+        btn.addTarget(self, action: #selector(commentButtonPressed), for: .touchUpInside)
         return btn
     }()
+    
+    @objc func commentButtonPressed() {
+        guard let post = post else { return }
+        delegate?.didTapComment(post: post)
+    }
+    
+    @objc func handleLike() {
+        delegate?.didTapLike(for: self)
+    }
     
     let sendButton : UIButton = {
         let btn = UIButton(type: .system)

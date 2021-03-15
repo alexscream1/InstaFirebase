@@ -64,18 +64,29 @@ class HomePageController: UICollectionViewController {
             dictionaries.forEach { (key, value) in
                 guard let dictionary = value as? [String: Any] else { return }
 
-                let post = Posts(user: user, dictionary: dictionary)
+                var post = Posts(user: user, dictionary: dictionary)
+                post.id = key
                 
-                self.posts.append(post)
+                guard let uid = Auth.auth().currentUser?.uid else { return }
+                Database.database().reference().child("likes").child(key).child(uid).observeSingleEvent(of: .value) { (snapshot) in
+                    if let value = snapshot.value as? Int, value == 1 {
+                        post.hasLike = true
+                    } else {
+                        post.hasLike = false
+                    }
+                    self.posts.append(post)
+                    
+                    // Sort posts in home page by creation date
+                    self.posts.sort { (p1, p2) -> Bool in
+                        return p1.creationDate.compare(p2.creationDate) == .orderedDescending
+                    }
+                    
+                    self.collectionView?.reloadData()
+                    
+                } withCancel: { (error) in
+                    print("Failed to fetch user likes")
+                }
             }
-            
-            // Sort posts in home page by creation date
-            self.posts.sort { (p1, p2) -> Bool in
-                return p1.creationDate.compare(p2.creationDate) == .orderedDescending
-            }
-            
-            self.collectionView?.reloadData()
-
         } withCancel: { (error) in
             print("Failed to fetch posts", error)
         }
@@ -125,7 +136,8 @@ class HomePageController: UICollectionViewController {
             cell.post = posts[indexPath.item]
         }
         
-    
+        cell.delegate = self
+        
         return cell
     }
 
@@ -141,5 +153,35 @@ extension HomePageController: UICollectionViewDelegateFlowLayout {
         height += 50
         height += 60
         return CGSize(width: view.frame.width, height: height)
+    }
+}
+
+extension HomePageController: HomePageCellDelegate {
+    func didTapComment(post: Posts) {
+        let commentsController = CommentsController(collectionViewLayout: UICollectionViewFlowLayout())
+        commentsController.post = post
+        navigationController?.pushViewController(commentsController, animated: true)
+    }
+    
+    func didTapLike(for cell: HomePageCell) {
+        guard let indexPath = collectionView.indexPath(for: cell) else { return }
+        
+        var post = posts[indexPath.item]
+        guard let postID = post.id else { return }
+        guard let uid = Auth.auth().currentUser?.uid else { return }
+        
+        let values = [uid: post.hasLike == true ? 0 : 1]
+        
+        // Save like to database
+        Database.database().reference().child("likes").child(postID).updateChildValues(values) { (error, _) in
+            if let error = error {
+                print("Failed to save like:", error)
+            }
+            
+            post.hasLike = !post.hasLike
+            self.posts[indexPath.item] = post
+            self.collectionView?.reloadItems(at: [indexPath])
+        }
+        
     }
 }

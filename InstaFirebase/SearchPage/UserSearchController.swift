@@ -8,10 +8,10 @@
 import UIKit
 import Firebase
 
-private let cellID = "cellID"
 
 class UserSearchController: UICollectionViewController {
-
+    
+    let cellID = "cellID"
     var filteredUsers = [User]()
     var users = [User]()
     

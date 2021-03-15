@@ -33,9 +33,12 @@
 		665FE9BD25FCACD40089200B /* UserSearchController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 665FE9BC25FCACD40089200B /* UserSearchController.swift */; };
 		666900CD25F7E5E200875462 /* MainTabBarController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 666900CC25F7E5E200875462 /* MainTabBarController.swift */; };
 		666900D425F7E7C700875462 /* UserProfileCollectionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 666900D325F7E7C700875462 /* UserProfileCollectionViewController.swift */; };
+		66AE280D25FF487500B24A81 /* Comments.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66AE280C25FF487500B24A81 /* Comments.swift */; };
 		66C3017225F7A6EC0093309F /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 66C3017125F7A6EC0093309F /* GoogleService-Info.plist */; };
 		66E048EA25FE2F9B001201E8 /* CameraViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66E048E925FE2F9B001201E8 /* CameraViewController.swift */; };
 		66E048EE25FE607D001201E8 /* PreviewPhotoContainerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66E048ED25FE607D001201E8 /* PreviewPhotoContainerView.swift */; };
+		66E048F225FE74A4001201E8 /* CommentsController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66E048F125FE74A4001201E8 /* CommentsController.swift */; };
+		66E048F825FEB0C4001201E8 /* CommentCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66E048F725FEB0C4001201E8 /* CommentCell.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -68,9 +71,12 @@
 		665FE9BC25FCACD40089200B /* UserSearchController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserSearchController.swift; sourceTree = "<group>"; };
 		666900CC25F7E5E200875462 /* MainTabBarController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainTabBarController.swift; sourceTree = "<group>"; };
 		666900D325F7E7C700875462 /* UserProfileCollectionViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserProfileCollectionViewController.swift; sourceTree = "<group>"; };
+		66AE280C25FF487500B24A81 /* Comments.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Comments.swift; sourceTree = "<group>"; };
 		66C3017125F7A6EC0093309F /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		66E048E925FE2F9B001201E8 /* CameraViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CameraViewController.swift; sourceTree = "<group>"; };
 		66E048ED25FE607D001201E8 /* PreviewPhotoContainerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PreviewPhotoContainerView.swift; sourceTree = "<group>"; };
+		66E048F125FE74A4001201E8 /* CommentsController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CommentsController.swift; sourceTree = "<group>"; };
+		66E048F725FEB0C4001201E8 /* CommentCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CommentCell.swift; sourceTree = "<group>"; };
 		D215AA216B041C4E3D1761B0 /* Pods-InstaFirebase.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-InstaFirebase.release.xcconfig"; path = "Target Support Files/Pods-InstaFirebase/Pods-InstaFirebase.release.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -99,6 +105,7 @@
 			children = (
 				66012EC025FA90C3003056C7 /* Posts.swift */,
 				6637889925FBA9F60009984F /* User.swift */,
+				66AE280C25FF487500B24A81 /* Comments.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -108,6 +115,8 @@
 			children = (
 				6637889325FB57E30009984F /* HomePageController.swift */,
 				6637889625FB57FB0009984F /* HomePageCell.swift */,
+				66E048F125FE74A4001201E8 /* CommentsController.swift */,
+				66E048F725FEB0C4001201E8 /* CommentCell.swift */,
 			);
 			path = HomePage;
 			sourceTree = "<group>";
@@ -358,6 +367,9 @@
 				664A13AE25FA098400ED694F /* PhotoSelectionController.swift in Sources */,
 				66012EC425FA9289003056C7 /* UserProfileCell.swift in Sources */,
 				664BE1D525F77FF100822F55 /* AppDelegate.swift in Sources */,
+				66AE280D25FF487500B24A81 /* Comments.swift in Sources */,
+				66E048F825FEB0C4001201E8 /* CommentCell.swift in Sources */,
+				66E048F225FE74A4001201E8 /* CommentsController.swift in Sources */,
 				66012EC725FA9C91003056C7 /* CustomImageView.swift in Sources */,
 				6637889725FB57FB0009984F /* HomePageCell.swift in Sources */,
 				665FE9BD25FCACD40089200B /* UserSearchController.swift in Sources */,
