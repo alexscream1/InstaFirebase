@@ -34,9 +34,9 @@ class CameraViewController: UIViewController {
         super.viewDidLoad()
         
         view.backgroundColor = .black
-        
-        setupButtons()
         setupCaptureSession()
+        setupButtons()
+        
     }
     
     // Return to home page action

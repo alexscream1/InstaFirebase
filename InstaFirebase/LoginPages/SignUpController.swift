@@ -200,6 +200,10 @@ class SignUpController: UIViewController {
         
         // Stackview constraints
         stackView.anchor(top: plusPhotoButton.bottomAnchor, left: view.leftAnchor, bottom: nil, right: view.rightAnchor, paddingTop: 30, paddingLeft: 40, paddingBottom: 0, paddingRight: 40, width: 0, height: 200)
+        
+        emailTextField.delegate = self
+        usernameTextField.delegate = self
+        passwordTextField.delegate = self
     }
 }
 
@@ -225,4 +229,14 @@ extension SignUpController: UIImagePickerControllerDelegate, UINavigationControl
     
 }
 
-
+extension SignUpController: UITextFieldDelegate {
+    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
+        switch textField {
+        case emailTextField: usernameTextField.becomeFirstResponder()
+        case usernameTextField: passwordTextField.becomeFirstResponder()
+        case passwordTextField: passwordTextField.resignFirstResponder()
+        default: break
+        }
+        return true
+    }
+}

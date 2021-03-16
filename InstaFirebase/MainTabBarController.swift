@@ -43,7 +43,7 @@ class MainTabBarController: UITabBarController {
         
         
         // Likes page
-        let likesNavController = templateNavController(imageSelected: #imageLiteral(resourceName: "like_selected"), imageUnselected: #imageLiteral(resourceName: "like_unselected"))
+        let likesNavController = templateNavController(imageSelected: #imageLiteral(resourceName: "like_selected"), imageUnselected: #imageLiteral(resourceName: "like_unselected"), rootViewController: LikesController(collectionViewLayout: UICollectionViewFlowLayout()))
         
         
         // User profile page

@@ -8,6 +8,9 @@
 import UIKit
 import Firebase
 
+protocol UserProfileCollectionViewControllerDelegate {
+    func allPosts(posts: [Posts])
+}
 
 class UserProfileCollectionViewController: UICollectionViewController {
 
@@ -17,7 +20,7 @@ class UserProfileCollectionViewController: UICollectionViewController {
     var user: User?
     var posts = [Posts]()
     var userID: String?
-    
+    var delegate: UserProfileCollectionViewControllerDelegate?
     var isGridView = true
     var isFinishPaging = false
     
@@ -34,8 +37,15 @@ class UserProfileCollectionViewController: UICollectionViewController {
         fetchUser()
        
         navigationItem.rightBarButtonItem = UIBarButtonItem(image: UIImage(named: "gear")?.withRenderingMode(.alwaysOriginal), style: .plain, target: self, action: #selector(handleLogout))
+        
+        // Notification observer to observe when new photo added and update user profile
+        NotificationCenter.default.addObserver(self, selector: #selector(handleRefresh), name: SharePhotoViewController.updateFeedNotificationName, object: nil)
     }
     
+    @objc func handleRefresh() {
+        posts.removeAll()
+        fetchUser()
+    }
     
     @objc func handleLogout() {
         let alertController = UIAlertController(title: nil, message: nil, preferredStyle: .actionSheet)
@@ -88,13 +98,13 @@ class UserProfileCollectionViewController: UICollectionViewController {
             query = query.queryEnding(atValue: value)
         }
         
-        query.queryLimited(toLast: 4).observeSingleEvent(of: .value) { (snapshot) in
+        query.queryLimited(toLast: 10).observeSingleEvent(of: .value) { (snapshot) in
     
             guard var allObjects = snapshot.children.allObjects as? [DataSnapshot] else { return }
             
             allObjects.reverse()
             
-            if allObjects.count < 4 {
+            if allObjects.count < 10 {
                 self.isFinishPaging = true
             }
             
@@ -114,32 +124,27 @@ class UserProfileCollectionViewController: UICollectionViewController {
                 
             })
             
-            self.posts.forEach { (post) in
-                print(post.id ?? "")
-            }
-            
             self.collectionView.reloadData()
             
         } withCancel: { (error) in
             print("Failed to paginate posts", error)
         }
 
-        
     }
     
     fileprivate func fetchOrderedPosts() {
         
         guard let uid = self.user?.uid else { return }
-        
+
         let ref = Database.database().reference().child("posts").child(uid)
         ref.queryOrdered(byChild: "creationDate").observe(.childAdded) { (snapshot) in
             guard let dictionary = snapshot.value as? [String: Any] else { return }
-            
+
             guard let user = self.user else { return }
             let post = Posts(user: user, dictionary: dictionary)
             self.posts.insert(post, at: 0)
             self.collectionView.reloadData()
-            
+
         } withCancel: { (error) in
             print("failed to fetch posts:", error)
         }
@@ -180,6 +185,7 @@ class UserProfileCollectionViewController: UICollectionViewController {
     override func collectionView(_ collectionView: UICollectionView, viewForSupplementaryElementOfKind kind: String, at indexPath: IndexPath) -> UICollectionReusableView {
         let header = collectionView.dequeueReusableSupplementaryView(ofKind: kind, withReuseIdentifier: headerID, for: indexPath) as! UserProfileHeader
         header.user = self.user
+        header.postsCount = posts.count
         header.delegate = self
         return header
     }

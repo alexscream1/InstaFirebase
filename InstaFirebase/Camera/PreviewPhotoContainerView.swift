@@ -74,6 +74,7 @@ class PreviewPhotoContainerView: UIView {
                 saveLabel.font = UIFont.boldSystemFont(ofSize: 17)
                 saveLabel.textAlignment = .center
                 saveLabel.numberOfLines = 0
+                saveLabel.textColor = .white
                 saveLabel.backgroundColor = UIColor(white: 0, alpha: 0.3)
                 saveLabel.frame = CGRect(x: 0, y: 0, width: 150, height: 80)
                 saveLabel.center = self.center

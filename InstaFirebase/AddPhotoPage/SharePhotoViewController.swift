@@ -17,6 +17,19 @@ class SharePhotoViewController: UIViewController {
             self.imageView.image = selectedImage
         }
     }
+    
+    let imageView: UIImageView = {
+       let iv = UIImageView()
+        iv.contentMode = .scaleToFill
+        iv.clipsToBounds = true
+        return iv
+    }()
+    
+    let textView: UITextView = {
+        let tv = UITextView()
+        tv.font = UIFont.systemFont(ofSize: 14)
+        return tv
+    }()
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -86,20 +99,6 @@ class SharePhotoViewController: UIViewController {
         }
     }
     
-    
-    let imageView: UIImageView = {
-       let iv = UIImageView()
-        iv.contentMode = .scaleToFill
-        iv.clipsToBounds = true
-        return iv
-    }()
-    
-    let textView: UITextView = {
-        let tv = UITextView()
-        tv.font = UIFont.systemFont(ofSize: 14)
-        return tv
-    }()
-    
     // Setup view with selected image and text view to fill up, before sharing photo
     fileprivate func setupImageAndTextViews() {
         
@@ -122,8 +121,4 @@ class SharePhotoViewController: UIViewController {
     override var prefersStatusBarHidden: Bool {
         return true
     }
-
-    
-    
-
 }

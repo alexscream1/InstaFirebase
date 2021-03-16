@@ -131,6 +131,9 @@ class LoginViewController: UIViewController {
         stackView.axis = .vertical
         stackView.spacing = 10
         
+        emailTextField.delegate = self
+        passwordTextField.delegate = self
+        
         view.addSubview(stackView)
         stackView.anchor(top: logoContainerView.bottomAnchor, left: view.leftAnchor, bottom: nil, right: view.rightAnchor, paddingTop: 40, paddingLeft: 40, paddingBottom: 0, paddingRight: 40, width: 0, height: 140)
     }
@@ -140,4 +143,15 @@ class LoginViewController: UIViewController {
         navigationController?.pushViewController(signUpController, animated: true)
     }
 
+}
+
+extension LoginViewController: UITextFieldDelegate {
+    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
+        switch textField {
+        case emailTextField: passwordTextField.becomeFirstResponder()
+        case passwordTextField: passwordTextField.resignFirstResponder()
+        default: break
+        }
+        return true
+    }
 }

@@ -17,6 +17,15 @@ class UserProfileHeader: UICollectionViewCell {
     
     var delegate: UserProfileHeaderDelegate?
     
+    var postsCount: Int? {
+        didSet {
+            let attributedText = NSMutableAttributedString(string: "\(String(describing: postsCount ?? 0))\n", attributes: [NSAttributedString.Key.font: UIFont.boldSystemFont(ofSize: 16)])
+            attributedText.append(NSAttributedString(string: "posts", attributes: [NSAttributedString.Key.font: UIFont.systemFont(ofSize: 16), NSAttributedString.Key.foregroundColor: UIColor.lightGray]))
+            
+            postsLabel.attributedText = attributedText
+        }
+    }
+    
     var user: User? {
         didSet {
             guard let profileImageURL = user?.profileImageURL else { return }
@@ -71,11 +80,6 @@ class UserProfileHeader: UICollectionViewCell {
     // Posts label in Statistic bar
     let postsLabel : UILabel = {
         let label = UILabel()
-        
-        let attributedText = NSMutableAttributedString(string: "0\n", attributes: [NSAttributedString.Key.font: UIFont.boldSystemFont(ofSize: 16)])
-        attributedText.append(NSAttributedString(string: "posts", attributes: [NSAttributedString.Key.font: UIFont.systemFont(ofSize: 16), NSAttributedString.Key.foregroundColor: UIColor.lightGray]))
-        
-        label.attributedText = attributedText
         label.numberOfLines = 0
         label.textAlignment = .center
         return label
