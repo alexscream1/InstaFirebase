@@ -8,8 +8,6 @@ This application is analogue of Instagram with similar design and different poss
 
 Using Firebase Realtime Database and Authenfication, AVFoundation and Photos Framework
 
-
-
 <img src="photos/insta.jpg" width="300">
 <img src="photos/insta2.jpg" width="300">
 <img src="photos/insta3.jpg" width="300">
