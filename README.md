@@ -7,3 +7,9 @@ This application is analogue of Instagram with similar design and different poss
 - follow another accounts
 
 Using Firebase Realtime Database and Authenfication, AVFoundation and Photos Framework
+
+
+![](photos/insta.jpg)
+![](photos/insta2.jpg)
+![](photos/insta3.jpg)
+![](photos/insta4.jpg)
