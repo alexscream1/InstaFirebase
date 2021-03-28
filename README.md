@@ -8,8 +8,8 @@ This application is analogue of Instagram with similar design and different poss
 
 Using Firebase Realtime Database and Authenfication, AVFoundation and Photos Framework
 
+<img src="photos/insta.jpg" width="300">
+<img src="photos/insta2.jpg" width="300">
+<img src="photos/insta3.jpg" width="300">
+<img src="photos/insta4.jpg" width="300">
 
-![](photos/insta.jpg)
-![](photos/insta2.jpg)
-![](photos/insta3.jpg)
-![](photos/insta4.jpg)
